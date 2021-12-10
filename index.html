@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong Game</title>
+    <style>
+        /* *{
+            outline: none;
+            text-decoration: none;
+        } */
+        body{
+            background-color: dimgray;
+        }
+        #pong{
+            border: none;
+            position: relative;
+            margin: auto;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0; 
+        }
+        h1{
+            font-size: 5rem;
+            color: #fff;
+        }
+        .flex-container{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .buttons{
+            margin-top: 2rem;
+        }
+        button{
+            margin: 1rem;
+            height: 3rem;
+            width: 16rem;
+            border-radius: .5rem;
+            border: none;
+            outline: none;
+            text-decoration: none;
+            background-color: #B8BAB1;
+            color: black;
+            font-size: 1.2rem;
+        }
+        .change{
+            background-color: black;
+            color: #B8BAB1;
+        }
+        p{
+            color: #fff;
+        }
+        
+
+    </style>
+</head>
+<body>
+    <div class="flex-container">
+        <div class="heading">
+            <h1>Pong</h1>
+        </div>
+        <div class="gameScreen">
+            <canvas id="pong" width="600" height="400"></canvas>
+        </div>
+        <div class="buttons">
+            <a href="index.html"><button class="single-player change">Single Player</button></a>
+            <a href="twoPlayer.html"><button class="two-player">Two Player</button></a>
+        </div>
+        <p class="copyright">Copyright &copy; RishabhBilwal All Rights Reserved</p>
+    </div>
+    
+    <script src="pongsingle.js"></script>
+</body>
+</html>
