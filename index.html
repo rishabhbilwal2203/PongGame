@@ -16,17 +16,18 @@
         #pong{
             border: none;
             position: relative;
-            margin: auto;
-            top: 0;
-            right: 0;
-            left: 0;
-            bottom: 0; 
         }
         h1{
             font-size: 5rem;
             color: #fff;
         }
         .flex-container{
+            margin: auto;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            position: absolute;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -61,9 +62,6 @@
 </head>
 <body>
     <div class="flex-container">
-        <div class="heading">
-            <h1>Pong</h1>
-        </div>
         <div class="gameScreen">
             <canvas id="pong" width="600" height="400"></canvas>
         </div>
