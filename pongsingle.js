@@ -274,6 +274,7 @@ function exitScreen(text){
     drawArc(ball.x, ball.y, ball.radius, ball.color);
 
     drawText(text,canvas.width/4,canvas.height/2,75,"#fff");
+    drawText("Press Enter to ReStart",canvas.width/4,canvas.height-30,35,"#fff");
     document.querySelector("body").addEventListener("keypress",function(evt){
         if(evt.key == "Enter"){
             pass = 1;
