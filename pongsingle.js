@@ -24,7 +24,7 @@ const ball = {
     radius : 10,
     velocityX : 4,
     velocityY : 4,
-    speed : 5,
+    speed : 8,
     color : "WHITE"
 }
 
@@ -83,25 +83,58 @@ function drawArc(x, y, r, color){
     ctx.fill();
 }
 
-document.querySelector("body").addEventListener("keydown", function(evt){
-    console.log(evt.key);
-    if(evt.key === "ArrowDown")
-    {
-        user.direction = "down";
-    }else if(evt.key === "ArrowUp"){
-        user.direction = "up";
-    }
-});
+// document.querySelector("body").addEventListener("keydown", function(evt){
+//     console.log(evt.key);
+//     if(evt.key === "ArrowDown")
+//     {
+//         // user.direction = "down";
+//         user.y += 20;
+//     }else if(evt.key === "ArrowUp"){
+//         // user.direction = "up";
+//         user.y -= 20;
+//     }
+// });
 
-
+// canvas.addEventListener("mousemove", getMousePos);
 
 // function getMousePos(evt){
-//     console.log(evt);
-//     // let rect = canvas.getBoundingClientRect();
-//     // console.log(evt)
-//     // user.y = evt.clientY - rect.top - user.height/2;
-//     // com.y = evt.clientY - rect.top - user.height/2;
+//     let rect = canvas.getBoundingClientRect();
+    
+//     user.y = evt.clientY - rect.top - user.height/2;
 // }
+
+moveDownUser = () => {
+    user.y += 10;
+    (user.y + user.height > canvas.height) && (user.y = canvas.height - user.height)
+}
+
+moveUpUser = () => {
+    user.y -= 10;
+    user.y < 0 && (user.y = 0)
+}
+
+const controller = {
+    38: {pressed: false, func: moveUpUser},
+    40: {pressed: false, func: moveDownUser},
+}
+
+const handleKeyDown = (e) => {
+    controller[e.keyCode] && (controller[e.keyCode].pressed = true)
+}
+
+const handleKeyUp = (e) => {
+    controller[e.keyCode] && (controller[e.keyCode].pressed = false)
+}
+
+const runPressedButtons = () => {
+    Object.keys(controller).forEach(key => {
+        controller[key].pressed && controller[key].func()
+    })
+}
+
+document.addEventListener("keydown", handleKeyDown)
+document.addEventListener("keyup", handleKeyUp)
+
 
 function drawNet(){
     for(let i = 0; i <= canvas.height; i+=15){
@@ -127,7 +160,7 @@ function resetBall(){
     ball.x = canvas.width/2;
     ball.y = canvas.height/2;
     ball.velocityX = -ball.velocityX;
-    ball.speed = 5;
+    ball.speed = 8;
 }
 
 function resetScore(){
@@ -136,7 +169,7 @@ function resetScore(){
 }
 
 function update(){
-    if(user.score === 10 || com.score === 10){
+    if(user.score === 3 || com.score === 3){
         if(user.score > com.score){
             resetScore();
             pass = -1;
@@ -162,18 +195,18 @@ function update(){
     ball.x += ball.velocityX;
     ball.y += ball.velocityY;
 
-    if(user.y > canvas.height - 100)
-    {
-        user.direction = "up";
-    }else if(user.y < 0){
-        user.direction = "down";
-    }
-    if(user.direction === "up")
-    {
-        user.y -= 4;
-    }else if(user.direction === "down"){
-        user.y += 4;
-    }
+    // if(user.y > canvas.height - 100)
+    // {
+    //     user.direction = "up";
+    // }else if(user.y < 0){
+    //     user.direction = "down";
+    // }
+    // if(user.direction === "up")
+    // {
+    //     user.y -= 4;
+    // }else if(user.direction === "down"){
+    //     user.y += 4;
+    // }
 
     // user.y += ((ball.y - (user.y + user.height/2)))*0.1;
 
@@ -257,10 +290,10 @@ function welcomeScreen(){
 
     drawText("Welcome To",canvas.width/6,canvas.height/3+40,75,"#fff");
     drawText("Pong",canvas.width/3,canvas.height/2+40,75,"#fff");
-    drawText("Press Enter to Start",canvas.width/4,canvas.height-30,35,"#fff");
+    drawText("Press r to Start",canvas.width/3-20,canvas.height-30,35,"#fff");
 }
 
-function exitScreen(text){
+function controlScreen(){
     drawRect(0, 0, canvas.width/2, canvas.height, "#080709");
     drawRect(canvas.width/2, 0, canvas.width/2,canvas.height, "#B8BAB1");
 
@@ -273,21 +306,42 @@ function exitScreen(text){
 
     drawArc(ball.x, ball.y, ball.radius, ball.color);
 
-    drawText(text,canvas.width/4,canvas.height/2,75,"#fff");
-    drawText("Press Enter to ReStart",canvas.width/4,canvas.height-30,35,"#fff");
+    ctx.fillStyle = 'rgb(255,255,255,.7)';
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    drawText("Controls",canvas.width/3+20,canvas.height/7,35,"#000");
+    var img = document.querySelector("img");
+
+    ctx.drawImage(img,canvas.width/3+20,canvas.height/6,150,150);
+    drawText("↑ key ---> for Up",canvas.width/4+30,canvas.height/2+50,25,"#000")
+    drawText("↓ key ---> for Down",canvas.width/4+30,canvas.height/2+90,25,"#000")
+    drawText("Press Enter to Start",canvas.width/4,canvas.height-30,35,"#000");
     document.querySelector("body").addEventListener("keypress",function(evt){
-        if(evt.key == "Enter"){
-            pass = 1;
+        console.log(evt.key);
+        if(evt.key === "r"){
+            pass = 0;
         }
     });
 
 }
 
-function game(){
-    // update();
+function exitScreen(text){
+    drawRect(0, 0, canvas.width/2, canvas.height, "#080709");
+    drawRect(canvas.width/2, 0, canvas.width/2,canvas.height, "#B8BAB1");
 
-    
-    // render();
+
+    drawRect(user.x, user.y, user.width, user.height, user.color);
+
+    drawRect(com.x, com.y, com.width, com.height, com.color);
+
+    drawArc(ball.x, ball.y, ball.radius, ball.color);
+
+    drawText(text,canvas.width/4,canvas.height/2,75,"#fff");
+    drawText("Press Enter to Restart",canvas.width/4,canvas.height-30,35,"#fff");
+
+}
+
+function game(){
     if(pass === -1 || pass === -2){
         if(pass === -1){
             exitScreen("You Won!!")
@@ -295,17 +349,29 @@ function game(){
             exitScreen("You Lose!!")
         }
 
-    }else{
+    }else if(pass === 1){
         welcomeScreen();
+        document.querySelector("body").addEventListener("keypress",function(evt){
+            if(evt.key === "r"){
+                pass = 2;
+            }
+        });
+        
+        
     }
-    document.querySelector("body").addEventListener("keypress",function(evt){
-        if(evt.key == "Enter"){
-            pass = 0;
-        }
-    });
-    if(pass === 0){
+    if(pass === 2){
+        controlScreen();
+        document.querySelector("body").addEventListener("keypress",function(evt){
+            if(evt.key === "Enter"){
+                pass = 0;
+            }
+        });
+    }
+    else if(pass === 0){
+        runPressedButtons();
         render();
         update();
+        
     }
     
     
