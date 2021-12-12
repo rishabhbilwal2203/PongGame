@@ -13,6 +13,10 @@
             border: none;
             position: relative;
         }
+        h1{
+            font-size: 5rem;
+            color: #fff;
+        }
         .flex-container{
             display: flex;
             position: absolute;
@@ -48,10 +52,16 @@
         p{
             color: #fff;
         }
+        img{
+            color: aliceblue;
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div class="flex-container">
+        <img class="img" src="arrows.png" width="40px" height="40px">
+        <img class="img2" src="wasd.png" width="40px" height="40px">
         <div class="gameScreen">
             <canvas id="pong" width="600" height="400"></canvas>
         </div>
