@@ -184,7 +184,7 @@ function resetScore(){
 }
 
 function update(){
-    if(user.score === 3 || com.score === 3){
+    if(user.score === 10 || com.score === 10){
         if(user.score > com.score){
             resetScore();
             pass = -1;
